@@ -1,4 +1,4 @@
-#!/home/ahluwa22/Desktop/COMP-8120/venv/bin/python3
+#!/Users/aryamanahluwalia/Projects/COMP_8120/Fashion_recommender/venv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys
