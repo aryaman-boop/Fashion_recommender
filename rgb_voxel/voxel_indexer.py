@@ -23,13 +23,42 @@ class RGBVoxelIndexer:
         return (int(r) // self.voxel_size, int(g) // self.voxel_size, int(b) // self.voxel_size)
 
     def find_neighbors(self, r, g, b, k=10):
-        voxel = self._get_voxel(r, g, b)
-        neighbors = []
-        for dx in [-1, 0, 1]:
-            for dy in [-1, 0, 1]:
-                for dz in [-1, 0, 1]:
-                    neighbor_voxel = (voxel[0]+dx, voxel[1]+dy, voxel[2]+dz)
-                    neighbors.extend(self.voxel_map.get(neighbor_voxel, []))
-        distances = [((nr - r)**2 + (ng - g)**2 + (nb - b)**2, (nr, ng, nb)) for nr, ng, nb in neighbors]
-        distances.sort(key=lambda x: x[0])
-        return [color for _, color in distances[:k]]
+    from math import dist
+
+    target_voxel = self._get_voxel(r, g, b)
+    searched_cubes = set()
+    neighbors = []
+
+    # Helper to collect neighbors from a cube
+    def collect_from_cube(cube):
+        if cube in self.voxel_map:
+            searched_cubes.add(cube)
+            neighbors.extend(self.voxel_map[cube])
+
+    # Step 1: Check current voxel
+    collect_from_cube(target_voxel)
+
+    # Step 2: Expand until we have enough points
+    radius = 1
+    max_radius = 4  # Prevent infinite expansion in sparse data
+    while len(neighbors) < k and radius <= max_radius:
+        for dx in range(-radius, radius + 1):
+            for dy in range(-radius, radius + 1):
+                for dz in range(-radius, radius + 1):
+                    neighbor_voxel = (
+                        target_voxel[0] + dx,
+                        target_voxel[1] + dy,
+                        target_voxel[2] + dz
+                    )
+                    if neighbor_voxel not in searched_cubes:
+                        collect_from_cube(neighbor_voxel)
+        radius += 1
+
+    # Log searched cubes and total found
+    print(f"[DEBUG] Query RGB=({r},{g},{b}) → Voxel={target_voxel}")
+    print(f"[DEBUG] Cubes searched: {len(searched_cubes)}")
+    print(f"[DEBUG] Points found: {len(neighbors)}")
+
+    # Step 3: Sort by Euclidean distance
+    neighbors.sort(key=lambda p: dist((r, g, b), p))
+    return neighbors[:k]
