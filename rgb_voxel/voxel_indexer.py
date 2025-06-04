@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import ast  # for safely parsing string lists
+from math import dist
 
 class RGBVoxelIndexer:
     def __init__(self, csv_path, divisions=5):
@@ -23,42 +24,40 @@ class RGBVoxelIndexer:
         return (int(r) // self.voxel_size, int(g) // self.voxel_size, int(b) // self.voxel_size)
 
     def find_neighbors(self, r, g, b, k=10):
-    from math import dist
+        target_voxel = self._get_voxel(r, g, b)
+        searched_cubes = set()
+        neighbors = []
 
-    target_voxel = self._get_voxel(r, g, b)
-    searched_cubes = set()
-    neighbors = []
+        # Helper function to collect points from a voxel cube
+        def collect_from_cube(cube):
+            if cube in self.voxel_map:
+                searched_cubes.add(cube)
+                neighbors.extend(self.voxel_map[cube])
 
-    # Helper to collect neighbors from a cube
-    def collect_from_cube(cube):
-        if cube in self.voxel_map:
-            searched_cubes.add(cube)
-            neighbors.extend(self.voxel_map[cube])
+        # Step 1: Try collecting from current voxel
+        collect_from_cube(target_voxel)
 
-    # Step 1: Check current voxel
-    collect_from_cube(target_voxel)
+        # Step 2: Expand search radius until enough points or max radius reached
+        radius = 1
+        max_radius = 4
+        while len(neighbors) < k and radius <= max_radius:
+            for dx in range(-radius, radius + 1):
+                for dy in range(-radius, radius + 1):
+                    for dz in range(-radius, radius + 1):
+                        neighbor_voxel = (
+                            target_voxel[0] + dx,
+                            target_voxel[1] + dy,
+                            target_voxel[2] + dz
+                        )
+                        if neighbor_voxel not in searched_cubes:
+                            collect_from_cube(neighbor_voxel)
+            radius += 1
 
-    # Step 2: Expand until we have enough points
-    radius = 1
-    max_radius = 4  # Prevent infinite expansion in sparse data
-    while len(neighbors) < k and radius <= max_radius:
-        for dx in range(-radius, radius + 1):
-            for dy in range(-radius, radius + 1):
-                for dz in range(-radius, radius + 1):
-                    neighbor_voxel = (
-                        target_voxel[0] + dx,
-                        target_voxel[1] + dy,
-                        target_voxel[2] + dz
-                    )
-                    if neighbor_voxel not in searched_cubes:
-                        collect_from_cube(neighbor_voxel)
-        radius += 1
+        # Debug output
+        print(f"[DEBUG] Query RGB=({r},{g},{b}) → Voxel={target_voxel}")
+        print(f"[DEBUG] Cubes searched: {len(searched_cubes)}")
+        print(f"[DEBUG] Points found: {len(neighbors)}")
 
-    # Log searched cubes and total found
-    print(f"[DEBUG] Query RGB=({r},{g},{b}) → Voxel={target_voxel}")
-    print(f"[DEBUG] Cubes searched: {len(searched_cubes)}")
-    print(f"[DEBUG] Points found: {len(neighbors)}")
-
-    # Step 3: Sort by Euclidean distance
-    neighbors.sort(key=lambda p: dist((r, g, b), p))
-    return neighbors[:k]
+        # Step 3: Sort by Euclidean distance and return top k
+        neighbors.sort(key=lambda p: dist((r, g, b), p))
+        return neighbors[:k]
