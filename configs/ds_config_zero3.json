@@ -1,0 +1,15 @@
+{
+  "zero_optimization": {
+    "stage": 3,
+    "offload_param": {
+      "device": "cpu"
+    },
+    "overlap_comm": true,
+    "contiguous_gradients": true
+  },
+  "train_batch_size": 8,
+  "gradient_accumulation_steps": 4,
+  "fp16": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,19 @@
+model_name_or_path: mistralai/Mistral-7B-Instruct-v0.1
+output_dir: ./checkpoints-mistral-multi-gpu
+logging_dir: ./logs
+
+per_device_train_batch_size: 2
+per_device_eval_batch_size: 2
+gradient_accumulation_steps: 4
+eval_steps: 500
+save_steps: 1000
+num_train_epochs: 3
+learning_rate: 2e-5
+weight_decay: 0.01
+lr_scheduler_type: cosine
+warmup_steps: 100
+
+bf16: true
+
+deepspeed: ds_config_zero3.json
+report_to: wandb

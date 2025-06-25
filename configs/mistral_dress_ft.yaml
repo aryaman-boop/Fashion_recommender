@@ -1,53 +1,41 @@
-# === MODEL SETTINGS ===
-base_model: mistralai/Mistral-7B-v0.1
-model_type: MistralForCausalLM
-tokenizer_type: AutoTokenizer
+base_model: mistralai/Mistral-7B-Instruct-v0.1
+output_dir: ./lora-out-dress-checkpoint-single
 
-# === DATASETS ===
-datasets:
-  - path: data/json_files/instruction_dataset.jsonl
-    type: alpaca
-
-dataset_prepared_path: data/json_files/processed
-val_set_size: 0.01
-
-# === LoRA ADAPTER SETTINGS ===
 adapter: lora
 lora_r: 8
 lora_alpha: 16
 lora_dropout: 0.05
-lora_target_modules: [q_proj, v_proj]
+lora_target_modules:
+  - q_proj
+  - v_proj
 
-# === TRAINING CONTROL ===
-sequence_len: 256
+dataset:
+  path: data/json_files/instruction_dataset.jsonl
+  type: alpaca
+  field: text
+  train_on_split: train
+
+sequence_len: 512
 sample_packing: true
 pad_to_sequence_len: true
 
-train_on_inputs: false
-group_by_length: false
+val_set_size: 0.05
+output_dir: lora-out-dress-checkpoint-single
+
+batch_size: 1
+micro_batch_size: 1     # <- single GPU setting
+num_epochs: 3
+learning_rate: 2e-5
+
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+warmup_steps: 10
 
 gradient_checkpointing: true
 gradient_accumulation_steps: 4
-micro_batch_size: 1
-num_epochs: 3
-optimizer: adamw_bnb_8bit
-lr_scheduler: cosine
-learning_rate: 2e-5
 
-# === OUTPUT ===
-output_dir: ./lora-out-dress
-resume_from_checkpoint: ./lora-out-dress-checkpoint-manual
-save_safetensors: true
-save_total_limit: 3
-logging_steps: 25
-
-# === LOGGING ===
-wandb_project: dress_rgb_project
 use_wandb: true
+wandb_project: dress-finetune-single-gpu
 
-# === PRECISION CONFIG ===
-bf16: false
-fp16: true
-
-# === MULTI-GPU ===
-ddp: true
+mixed_precision: bf16
+log_dir: logs

@@ -1,13 +1,22 @@
 # Ignore Python environment
 venv/
 __pycache__/
+*.pyc
+
+# VSCode and swap files
+.vscode/
+*.swp
 
 # Ignore temp/output files
 *.zip
 *.png
 *.log
-*.pyc
 .DS_Store
+*.bak
+*.tmp
+*.pth
+*.pt
+*.ckpt
 
 # Ignore Jupyter/IPython checkpoints
 .ipynb_checkpoints/
@@ -16,4 +25,14 @@ __pycache__/
 axolotl/
 # Optional Axolotl outputs
 lora-out-dress/
+lora-out-dress-checkpoint-manual/
+
+# WANDB run logs and symlinks
+wandb/
+wandb/latest-run
+
+# Ignore intermediate data files
 data/json_files/processed/
+data/json_files/*.val.json
+data/json_files/*.train.json
+mistral_env/
