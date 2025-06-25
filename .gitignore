@@ -1,0 +1,19 @@
+# Ignore Python environment
+venv/
+__pycache__/
+
+# Ignore temp/output files
+*.zip
+*.png
+*.log
+*.pyc
+.DS_Store
+
+# Ignore Jupyter/IPython checkpoints
+.ipynb_checkpoints/
+
+# Ignore Axolotl cloned repo
+axolotl/
+# Optional Axolotl outputs
+lora-out-dress/
+data/json_files/processed/
