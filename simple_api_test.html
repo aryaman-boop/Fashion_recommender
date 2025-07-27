@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Connection Test</h1>
+    <div id="status">Testing...</div>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5002';
+        
+        async function testAPI() {
+            const statusDiv = document.getElementById('status');
+            const resultDiv = document.getElementById('result');
+            
+            statusDiv.textContent = 'Testing...';
+            resultDiv.innerHTML = '';
+            
+            try {
+                console.log('Testing API at:', `${API_BASE_URL}/health`);
+                
+                const response = await fetch(`${API_BASE_URL}/health`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Response data:', data);
+                    statusDiv.textContent = '✅ API Online';
+                    statusDiv.style.color = 'green';
+                    resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    statusDiv.textContent = '❌ API Error';
+                    statusDiv.style.color = 'red';
+                    resultDiv.textContent = `Status: ${response.status}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.textContent = '❌ API Offline';
+                statusDiv.style.color = 'red';
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        // Test on page load
+        testAPI();
+    </script>
+</body>
+</html> 

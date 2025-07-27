@@ -1,0 +1,146 @@
+NEGATIVE SAMPLING FLOWCHART
+==========================
+
+START
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│                    DATASET                              │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐       │
+│  │   DRESS     │ │   SHIRT     │ │  TOP/TEE    │       │
+│  │  11,642     │ │  13,918     │ │  12,265     │       │
+│  │  images     │ │  images     │ │  images     │       │
+│  └─────────────┘ └─────────────┘ └─────────────┘       │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│              TRIPLET FORMATION                          │
+│                                                         │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐ │
+│  │   ANCHOR    │    │  POSITIVE   │    │  NEGATIVE   │ │
+│  │ (Reference) │    │  (Target)   │    │  (Random)   │ │
+│  │   Image     │    │   Image     │    │   Image     │ │
+│  └─────────────┘    └─────────────┘    └─────────────┘ │
+│         │                   │                   │       │
+│         ▼                   ▼                   ▼       │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐ │
+│  │   CLIP      │    │   CLIP      │    │   CLIP      │ │
+│  │  Encoder    │    │  Encoder    │    │  Encoder    │ │
+│  └─────────────┘    └─────────────┘    └─────────────┘ │
+│         │                   │                   │       │
+│         ▼                   ▼                   ▼       │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐ │
+│  │  640-dim    │    │  640-dim    │    │  640-dim    │ │
+│  │  Feature    │    │  Feature    │    │  Feature    │ │
+│  │  Vector     │    │  Vector     │    │  Vector     │ │
+│  └─────────────┘    └─────────────┘    └─────────────┘ │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│              COMBINER NETWORK                           │
+│                                                         │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │           AttentionFusionCombiner              │   │
+│  │  • Fuses anchor + text features                │   │
+│  │  • Outputs joint feature vector (640-dim)      │   │
+│  └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│              TRIPLET LOSS CALCULATION                   │
+│                                                         │
+│  d(anchor, positive) = distance between anchor & pos   │
+│  d(anchor, negative) = distance between anchor & neg   │
+│                                                         │
+│  LOSS = max(0, margin + d(anchor, positive) -          │
+│              d(anchor, negative))                      │
+│                                                         │
+│  Where:                                                 │
+│  • margin = 0.2 (hyperparameter)                       │
+│  • d() = cosine distance                               │
+│  • max(0, ...) = hinge loss                            │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│              BACKPROPAGATION                            │
+│                                                         │
+│  • Update CLIP model weights                           │
+│  • Update Combiner network weights                     │
+│  • Goal: Push positive closer, negative further        │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+END
+
+CURRENT IMPLEMENTATION DETAILS:
+==============================
+
+1. SIMPLE RANDOM NEGATIVE SAMPLING:
+   ┌─────────────────────────────────────────────────┐
+   │  For each positive pair (anchor + positive):    │
+   │                                                 │
+   │  1. Pick random index from dataset              │
+   │  2. Use that image as negative                  │
+   │  3. No filtering or difficulty consideration    │
+   └─────────────────────────────────────────────────┘
+
+2. CODE LOCATION: traintest2.py
+   ```python
+   # Line ~200-220
+   neg_idx = np.random.randint(0, len(relative_train_dataset))
+   neg_ref_img, neg_tgt_img, _ = relative_train_dataset[neg_idx]
+   batch_hard_negatives.append(neg_tgt_img.unsqueeze(0))
+   ```
+
+3. TRIPLET STRUCTURE:
+   ┌─────────────────────────────────────────────────┐
+   │  Each training example contains:                │
+   │                                                 │
+   │  • Anchor: Reference image (e.g., red dress)   │
+   │  • Positive: Target image (e.g., blue dress)   │
+   │  • Negative: Random image (e.g., any shirt)    │
+   │  • Text: Modification description               │
+   └─────────────────────────────────────────────────┘
+
+4. LOSS OBJECTIVE:
+   ┌─────────────────────────────────────────────────┐
+   │  The model learns to:                           │
+   │                                                 │
+   │  • Push anchor and positive CLOSER together     │
+   │  • Push anchor and negative FURTHER apart       │
+   │  • Maintain margin between positive & negative  │
+   └─────────────────────────────────────────────────┘
+
+POTENTIAL IMPROVEMENTS:
+======================
+
+1. HARD NEGATIVE MINING:
+   ┌─────────────────────────────────────────────────┐
+   │  Instead of random, find negatives that are:    │
+   │                                                 │
+   │  • Harder than positive (further from anchor)   │
+   │  • But not too hard (within margin)             │
+   │  • More informative for training                │
+   └─────────────────────────────────────────────────┘
+
+2. CATEGORY-AWARE SAMPLING:
+   ┌─────────────────────────────────────────────────┐
+   │  Balance negative examples:                     │
+   │                                                 │
+   │  • 70%: Same category, different item          │
+   │  • 20%: Different category                      │
+   │  • 10%: Random from all                         │
+   └─────────────────────────────────────────────────┘
+
+3. ONLINE HARD NEGATIVE MINING:
+   ┌─────────────────────────────────────────────────┐
+   │  During training, dynamically select:           │
+   │                                                 │
+   │  • Top-k most similar to anchor                 │
+   │  • Filter to valid negatives                    │
+   │  • Use hardest valid negative                   │
+   └─────────────────────────────────────────────────┘ 

@@ -1,0 +1,101 @@
+COMPOSED IMAGE RETRIEVAL SYSTEM - FLOWCHART
+==================================================
+
+START
+  |
+  v
+[User Uploads Image + Text]
+  |
+  v
+[Frontend Sends API Request]
+  |
+  v
+[API Service Receives Request]
+  |
+  v
+[Decode Base64 Image] -----> [Extract Text]
+  |                           |
+  v                           v
+[CLIP Image Encoding]     [CLIP Text Encoding]
+  |                           |
+  v                           v
+[640-dim Image Features]  [512-dim Text Features]
+  |                           |
+  +---------------------------+
+  |
+  v
+[Combiner Network - Feature Fusion]
+  |
+  v
+[640-dim Joint Features]
+  |
+  v
+[Color Analysis from Text]
+  |
+  v
+{Color Detected?}
+  |
+  YES -----> [Color Pre-filtering] -----> [Get Color-Filtered Images]
+  |                                         |
+  NO                                        |
+  |                                         |
+  v                                         v
+[Category Selection] <----------------------+
+  |
+  v
+{Multiple Categories?}
+  |
+  YES -----> [Build Combined Index]
+  |           |
+  NO          |
+  |           |
+  v           v
+[Use Category Index] <------+
+  |
+  v
+[HNSW Similarity Search]
+  |
+  v
+[Get Top 100 Candidates]
+  |
+  v
+{Color Filter Active?}
+  |
+  YES -----> [Apply Color Filter] -----> [Select Top 20 Color Matches]
+  |                                       |
+  NO                                      |
+  |                                       |
+  v                                       v
+[Select Top 20 Overall] <-----------------+
+  |
+  v
+[Prepare Result Objects]
+  |
+  v
+[Add Image Paths & Metadata]
+  |
+  v
+[Calculate Similarity Scores]
+  |
+  v
+[Send JSON Response to Frontend]
+  |
+  v
+[Display Images to User]
+  |
+  v
+END
+
+==================================================
+KEY COMPONENTS:
+- CLIP Model: Vision-language feature extraction
+- Combiner Network: Feature fusion
+- HNSW Index: Fast similarity search
+- Color Clustering: K-means + KD-trees
+- Flask API: RESTful service
+
+PERFORMANCE:
+- Total Images: 37,189
+- Search Speed: 100-500ms
+- Color Support: 80+ combinations
+- Result Quality: Top 20 matches 

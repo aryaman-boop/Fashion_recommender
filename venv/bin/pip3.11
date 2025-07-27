@@ -1,4 +1,6 @@
-#!/home/ahluwa22/Desktop/COMP-8120/venv/bin/python3
+#!/bin/sh
+'''exec' "/home/banik8/composed image retrieval/Fashion_recommender/venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

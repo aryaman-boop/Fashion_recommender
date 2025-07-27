@@ -1,6 +1,3 @@
-!pip install git+https://github.com/openai/CLIP.git
-
-
 import multiprocessing
 import random
 from pathlib import Path
@@ -8,57 +5,25 @@ from typing import Union, Tuple, List
 
 import torch
 import torch.nn.functional as F
-from clip.model import CLIP
 from torch import nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-
-
-!pip install importnb
-
-
-!pip install import_ipynb
-
-
-!pip install import_ipynb
-
-# Mount Google Drive
-from google.colab import drive
-drive.mount('/content/drive')
-
-# Change current working directory to where the notebook is located
-import os
-os.chdir('/content/drive/MyDrive/Colab Notebooks/image_retrieval')
-
-# Confirm you're in the right place
-print("Current working directory:", os.getcwd())
-print("Files:", os.listdir())
-
-# Import the helper
-import import_ipynb
-
-
-import sys
-sys.path.append('/content/drive/MyDrive/Colab Notebooks/image_retrieval')
-
-import data_utils  # Now referring to data_utils.py
-from data_utils import  FashionIQDataset
+from data_utils import FashionIQDataset
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
 else:
     device = torch.device("cpu")
 
-def extract_index_features(dataset: FashionIQDataset, clip_model: CLIP) -> \
-        Tuple[torch.tensor, List[str]]:
+def extract_index_features(dataset: FashionIQDataset, clip_model) -> Tuple[torch.tensor, List[str]]:
     """
     Extract FashionIQ or CIRR index features
     :param dataset: FashionIQ or CIRR dataset in 'classic' mode
     :param clip_model: CLIP model
     :return: a tensor of features and a list of images
     """
-    feature_dim = clip_model.visual.output_dim
+    feature_dim = clip_model.module.visual.output_dim if hasattr(clip_model, 'module') else clip_model.visual.output_dim
     classic_val_loader = DataLoader(dataset=dataset, batch_size=32, num_workers=multiprocessing.cpu_count(),
                                     pin_memory=True, collate_fn=collate_fn)
     index_features = torch.empty((0, feature_dim)).to(device, non_blocking=True)
@@ -67,7 +32,7 @@ def extract_index_features(dataset: FashionIQDataset, clip_model: CLIP) -> \
     for names, images in tqdm(classic_val_loader):
         images = images.to(device, non_blocking=True)
         with torch.no_grad():
-            batch_features = clip_model.encode_image(images)
+            batch_features = clip_model.module.encode_image(images) if hasattr(clip_model, 'module') else clip_model.encode_image(images)
             index_features = torch.vstack((index_features, batch_features))
             index_names.extend(names)
     return index_features, index_names
@@ -151,7 +116,12 @@ def save_model(name: str, cur_epoch: int, model_to_save: nn.Module, training_pat
     models_path = training_path / "saved_models"
     models_path.mkdir(exist_ok=True, parents=True)
     model_name = model_to_save.__class__.__name__
+    # Save .module.state_dict() if DataParallel, else .state_dict()
+    if hasattr(model_to_save, 'module'):
+        state_dict = model_to_save.module.state_dict()
+    else:
+        state_dict = model_to_save.state_dict()
     torch.save({
         'epoch': cur_epoch,
-        model_name: model_to_save.state_dict(),
+        model_name: state_dict,
     }, str(models_path / f'{name}.pt'))

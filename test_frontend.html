@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Image Retrieval - Test Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .file-input-wrapper:hover {
+            background: #5a6fd8;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .search-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .preview-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .result-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .result-info {
+            padding: 15px;
+        }
+
+        .result-rank {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .result-category {
+            background: #e8f4fd;
+            color: #0066cc;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .result-score {
+            color: #666;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #d63031;
+        }
+
+        .success {
+            background: #e6ffe6;
+            color: #00b894;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #00b894;
+        }
+
+        .api-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .api-status.online {
+            background: #00b894;
+            color: white;
+        }
+
+        .api-status.offline {
+            background: #d63031;
+            color: white;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            background: #f8f9fa;
+            border: 2px solid #e1e5e9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .category-filter.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .category-filter:hover {
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="api-status" id="apiStatus">Checking API...</div>
+    <button onclick="checkApiStatus()" style="position: fixed; top: 20px; right: 150px; padding: 8px 12px; background: #667eea; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 12px; z-index: 1000;">Test API</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>👗 Fashion Image Retrieval</h1>
+            <p>Upload an image and describe your desired modification to find similar fashion items</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="imageInput">📸 Upload Reference Image</label>
+                    <div class="file-input-wrapper">
+                        <span id="fileLabel">Choose an image file</span>
+                        <input type="file" id="imageInput" class="file-input" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <img id="previewImage" class="preview-image" alt="Preview">
+                </div>
+
+                <div class="input-group">
+                    <label for="textInput">✏️ Modification Text</label>
+                    <input type="text" id="textInput" class="text-input" 
+                           placeholder="e.g., make it blue, change to red, add stripes, make it shorter...">
+                </div>
+
+                <div class="input-group">
+                    <label>🎯 Search Categories (Optional)</label>
+                    <div class="category-filters">
+                        <div class="category-filter active" data-category="all">All Categories</div>
+                        <div class="category-filter" data-category="dress">Dress</div>
+                        <div class="category-filter" data-category="shirt">Shirt</div>
+                        <div class="category-filter" data-category="toptee">Top/Tee</div>
+                    </div>
+                </div>
+
+                <button id="searchButton" class="search-button" onclick="searchImages()">
+                    🔍 Search Images
+                </button>
+            </div>
+
+            <div id="messageArea"></div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>🎯 Search Results</h2>
+                    <span id="resultCount"></span>
+                </div>
+                <div class="results-grid" id="resultsGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:5002';
+        let selectedCategories = ['dress', 'shirt', 'toptee'];
+
+        // Initialize the interface
+        document.addEventListener('DOMContentLoaded', function() {
+            checkApiStatus();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // File input change
+            document.getElementById('imageInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    document.getElementById('fileLabel').textContent = file.name;
+                    showImagePreview(file);
+                }
+            });
+
+            // Category filters
+            document.querySelectorAll('.category-filter').forEach(filter => {
+                filter.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    
+                    if (category === 'all') {
+                        selectedCategories = ['dress', 'shirt', 'toptee'];
+                        document.querySelectorAll('.category-filter').forEach(f => f.classList.remove('active'));
+                        this.classList.add('active');
+                    } else {
+                        document.querySelector('.category-filter[data-category="all"]').classList.remove('active');
+                        this.classList.toggle('active');
+                        
+                        if (this.classList.contains('active')) {
+                            if (!selectedCategories.includes(category)) {
+                                selectedCategories.push(category);
+                            }
+                        } else {
+                            selectedCategories = selectedCategories.filter(c => c !== category);
+                        }
+                        
+                        if (selectedCategories.length === 0) {
+                            selectedCategories = ['dress', 'shirt', 'toptee'];
+                            document.querySelector('.category-filter[data-category="all"]').classList.add('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        function showImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('previewSection').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function checkApiStatus() {
+            try {
+                console.log('Checking API status at:', `${API_BASE_URL}/health`);
+                const response = await fetch(`${API_BASE_URL}/health`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const statusElement = document.getElementById('apiStatus');
+                
+                console.log('API response status:', response.status);
+                console.log('API response ok:', response.ok);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('API response data:', data);
+                    statusElement.textContent = '🟢 API Online';
+                    statusElement.className = 'api-status online';
+                } else {
+                    console.log('API response not ok');
+                    statusElement.textContent = '🔴 API Error';
+                    statusElement.className = 'api-status offline';
+                }
+            } catch (error) {
+                console.error('API status check error:', error);
+                const statusElement = document.getElementById('apiStatus');
+                statusElement.textContent = '🔴 API Offline';
+                statusElement.className = 'api-status offline';
+            }
+        }
+
+        async function searchImages() {
+            const imageFile = document.getElementById('imageInput').files[0];
+            const modificationText = document.getElementById('textInput').value.trim();
+            const searchButton = document.getElementById('searchButton');
+            const messageArea = document.getElementById('messageArea');
+
+            // Validation
+            if (!imageFile) {
+                showMessage('Please select an image file', 'error');
+                return;
+            }
+
+            if (!modificationText) {
+                showMessage('Please enter modification text', 'error');
+                return;
+            }
+
+            // Show loading state
+            searchButton.disabled = true;
+            searchButton.textContent = '🔍 Searching...';
+            showLoading();
+
+            try {
+                // Convert image to base64
+                const base64Image = await fileToBase64(imageFile);
+                
+                // Prepare request payload
+                const payload = {
+                    image: base64Image,
+                    modification_text: modificationText
+                };
+
+                // Add category filter if not all categories
+                if (selectedCategories.length < 3) {
+                    payload.search_categories = selectedCategories;
+                }
+
+                // Make API request
+                const response = await fetch(`${API_BASE_URL}/retrieve`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        displayResults(result.results);
+                        showMessage(`Found ${result.total_results} results!`, 'success');
+                    } else {
+                        showMessage('Search completed but no results found', 'error');
+                    }
+                } else {
+                    const errorData = await response.json();
+                    showMessage(`API Error: ${errorData.error || 'Unknown error'}`, 'error');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error. Please check if the API is running.', 'error');
+            } finally {
+                // Reset button state
+                searchButton.disabled = false;
+                searchButton.textContent = '🔍 Search Images';
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function showLoading() {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsGrid = document.getElementById('resultsGrid');
+            
+            resultsSection.style.display = 'block';
+            resultsGrid.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Searching for similar images...</p>
+                </div>
+            `;
+        }
+
+        function displayResults(results) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsGrid = document.getElementById('resultsGrid');
+            const resultCount = document.getElementById('resultCount');
+
+            resultCount.textContent = `${results.length} results found`;
+
+            if (results.length === 0) {
+                resultsGrid.innerHTML = `
+                    <div class="loading">
+                        <p>No results found. Try different modification text or categories.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsGrid.innerHTML = results.map(item => `
+                <div class="result-card">
+                    <img src="http://localhost:5002/images/${item.image_id}" 
+                         alt="${item.image_id}" 
+                         class="result-image"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4='">
+                    <div class="result-info">
+                        <div>
+                            <span class="result-rank">Rank #${item.rank}</span>
+                            <span class="result-category">${item.category}</span>
+                        </div>
+                        <div class="result-score">
+                            Similarity: ${(item.similarity_score * 100).toFixed(1)}%
+                        </div>
+                        <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                            ID: ${item.image_id}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showMessage(message, type) {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="${type}">${message}</div>`;
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageArea.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        // Check API status every 30 seconds
+        setInterval(checkApiStatus, 30000);
+    </script>
+</body>
+</html> 

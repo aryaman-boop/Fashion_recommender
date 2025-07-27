@@ -83,6 +83,13 @@ def clip_finetune_fiq(train_dress_types: List[str], val_dress_types: List[str],
     :param kwargs: if you use the `targetpad` transform you should prove `target_ratio` as kwarg
     """
 
+    clip_model, clip_preprocess = clip.load(clip_model_name, device=device, jit=False)
+
+    if torch.cuda.device_count() > 1:
+        print(f"Using {torch.cuda.device_count()} GPUs!")
+        clip_model = torch.nn.DataParallel(clip_model)
+    clip_model.to(device)
+
     training_start = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     training_path: Path = Path(
         base_path / f"models/clip_finetuned_on_fiq_{clip_model_name}_{training_start}")

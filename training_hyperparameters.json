@@ -1,0 +1,25 @@
+{
+    "batch_size": 64,
+    "clip_bs": 32,
+    "clip_model_name": "RN50x4",
+    "clip_model_path": null,
+    "combiner_lr": 0.0001,
+    "hidden_dim": 512,
+    "num_epochs": 50,
+    "projection_dim": 512,
+    "save_best": true,
+    "save_training": true,
+    "target_ratio": 1.25,
+    "train_dress_types": [
+        "dress",
+        "shirt",
+        "toptee"
+    ],
+    "transform": "targetpad",
+    "val_dress_types": [
+        "dress",
+        "shirt",
+        "toptee"
+    ],
+    "validation_frequency": 1
+}

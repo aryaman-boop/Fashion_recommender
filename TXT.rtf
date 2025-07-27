@@ -1,0 +1,244 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\froman\fcharset0 Times-Bold;\f2\fmodern\fcharset0 Courier;
+\f3\froman\fcharset0 Times-Italic;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid102\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid103\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid202\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid203\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid302\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid303\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid402\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid5}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Could you comment on the following proposed method to improve the state of the art of composed information retrieval? (i) augment the FashionIQ dataset with a metadata called category, e.g. long sleeve vs short sleeve. (ii) fine tune a model like BERT to take modification text as input and extract the category information if there is any. (iii) When fine tuning (reference_image, modification text, target image), use the information in (i) and (ii) to identify negative samples in order to perform contrastive learning.\
+\pard\pardeftab720\partightenfactor0
+\cf0 ==========================\
+\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 This proposed method to improve composed information retrieval (CIR) on the FashionIQ dataset is 
+\f1\b highly promising and aligns well with current trends in multimodal learning and contrastive learning.
+\f0\b0  Let's break down why each step makes sense and offer some additional commentary.\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 Overall Strengths of the Proposed Method:
+\f0\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls1\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Leveraging Richer Semantics:
+\f0\b0  By explicitly extracting and using category information, you're injecting more structured semantic understanding into the retrieval process. FashionIQ's original metadata does include categories (Dresses, Shirts, Tops & Tees), but refining this with more granular details like "long sleeve vs. short sleeve" from the modification text is a smart move.\
+\ls1\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Targeted Negative Mining:
+\f0\b0  The core innovation here is the use of category information for intelligent negative sampling. This is a critical aspect of contrastive learning, as well-chosen hard negatives can significantly boost model performance.\
+\ls1\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Multimodal Integration:
+\f0\b0  The method inherently combines visual (reference image), textual (modification text), and structured semantic (category) information, which is a powerful way to tackle CIR.\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 Detailed Commentary on Each Step:
+\f0\b0 \
+
+\f1\b (i) Augment the FashionIQ dataset with a metadata called category, e.g., long sleeve vs. short sleeve.
+\f0\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls2\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Rationale:
+\f0\b0  Excellent idea. FashionIQ already has some coarse categories (Dresses, Shirts, Tops & Tees). Adding finer-grained attributes like sleeve length, neckline type, pattern, etc., from product descriptions or even manual annotation will enrich the dataset considerably. These attributes are often implicitly mentioned in modification texts (e.g., "make it short-sleeved").\
+\ls2\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Implementation Considerations:
+\f0\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls2\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Source of Metadata:
+\f0\b0  Where will this metadata come from?\
+\pard\tx1660\tx2160\pardeftab720\li2160\fi-2160\sa240\partightenfactor0
+\ls2\ilvl2
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Existing Product Descriptions:
+\f0\b0  FashionIQ does provide real-world product descriptions. You can extract these attributes using rule-based methods or, more robustly, by training a specialized NLP model (like a BERT-based classifier/extractor) on a subset of the data.\
+\ls2\ilvl2
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Manual Annotation:
+\f0\b0  For attributes not easily derivable, manual annotation might be necessary, though this can be time-consuming.\
+\ls2\ilvl2
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Automatic Attribute Prediction:
+\f0\b0  You could train a vision model (or use pre-trained ones like those from DeepFashion) to predict attributes from the images themselves.\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls2\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Granularity:
+\f0\b0  Decide on the level of granularity for your categories. "Long sleeve vs. short sleeve" is good. "V-neck vs. round neck" could be another. The more precise, the more useful for negative sampling.\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 (ii) Fine-tune a model like BERT to take modification text as input and extract the category information if there is any.
+\f0\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls3\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Rationale:
+\f0\b0  This is crucial. It creates a bridge between the free-form natural language modification text and the structured category metadata. BERT is an excellent choice for this task.\
+\ls3\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Implementation Considerations:
+\f0\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls3\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Task Definition:
+\f0\b0  This can be framed as a multi-label classification problem (e.g., predicting "long sleeve", "short sleeve", "sleeveless" for a "sleeve length" attribute) or a sequence tagging task (e.g., identifying spans of text that refer to categories/attributes).\
+\ls3\ilvl1
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Training Data:
+\f0\b0  You'll need a dataset of 
+\f2\fs26 (modification_text, extracted_categories)
+\f0\fs24  pairs to fine-tune BERT. This could involve:\
+\pard\tx1660\tx2160\pardeftab720\li2160\fi-2160\sa240\partightenfactor0
+\ls3\ilvl2
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Weak Supervision:
+\f0\b0  Using heuristics to extract categories from the modification text where they explicitly appear and align with your newly added metadata.\
+\ls3\ilvl2
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Manual Annotation:
+\f0\b0  A subset of modification texts might need manual annotation for the categories they imply.\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls3\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Robustness:
+\f0\b0  Consider how BERT will handle implied categories or cases where the category isn't explicitly mentioned but can be inferred from context.\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 (iii) When fine-tuning (reference_image, modification text, target_image), use the information in (i) and (ii) to identify negative samples in order to perform contrastive learning.
+\f0\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls4\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Rationale:
+\f0\b0  This is where your method shines. Contrastive learning thrives on good negative samples. Random negative sampling (e.g., in-batch negatives) is often too easy. By using category information, you can identify "hard negatives" that are visually similar to the target image but differ in the specified category, or vice-versa.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Negative Sampling Strategies based on Category:
+\f0\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls4\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Category-Discrepant Negatives:
+\f0\b0 \
+\pard\tx1660\tx2160\pardeftab720\li2160\fi-2160\sa240\partightenfactor0
+\ls4\ilvl2\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 For a positive triplet (A,B,T) where A is the reference, B is the modification, and T is the target.\
+\ls4\ilvl2\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Identify the category inferred from B (e.g., "long sleeve").\
+\ls4\ilvl2\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 A hard negative N1 could be a 
+\f2\fs26 target_image
+\f0\fs24  from the dataset that is 
+\f3\i visually similar
+\f0\i0  to T but 
+\f3\i does not
+\f0\i0  have the "long sleeve" category.\
+\ls4\ilvl2\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9642 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Another hard negative N2 could be a 
+\f2\fs26 reference_image
+\f0\fs24  from the dataset that 
+\f3\i does
+\f0\i0  have the "long sleeve" category, but if modified by B would 
+\f3\i not
+\f0\i0  result in T. This forces the model to learn fine-grained distinctions within categories.\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls4\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Attribute-Mismatch Negatives:
+\f0\b0  If the modification text B specifies a change from "long sleeve" to "short sleeve", a hard negative could be a product that 
+\f3\i is
+\f0\i0  long-sleeved but 
+\f3\i shouldn't
+\f0\i0  be transformed by B into T.\
+\ls4\ilvl1
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 "Soft" Negatives:
+\f0\b0  You could also select negatives that match some categories but not others, or have a certain edit distance in terms of attributes.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls4\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Contrastive Loss Function:
+\f0\b0  You would likely use a triplet loss, InfoNCE loss, or a similar contrastive objective. The goal is to:\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls4\ilvl1\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Pull the embeddings of the query (composed of A and B) closer to the positive 
+\f2\fs26 target_image
+\f0\fs24  embedding.\
+\ls4\ilvl1\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Push the embeddings of the query further away from the intelligently sampled negative 
+\f2\fs26 target_image
+\f0\fs24  embeddings.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls4\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Benefits:
+\f0\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls4\ilvl1
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Improved Discriminative Power:
+\f0\b0  By training on hard negatives, your model will learn more fine-grained distinctions and become better at identifying the 
+\f3\i specific
+\f0\i0  attributes being modified.\
+\ls4\ilvl1
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Better Generalization:
+\f0\b0  The model will learn to disentangle relevant attributes from irrelevant ones, leading to better generalization on unseen queries.\
+\ls4\ilvl1
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Reduced Ambiguity:
+\f0\b0  This approach helps resolve ambiguity where multiple images might be visually similar but differ in a crucial attribute specified by the text.\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 Potential Challenges and Further Enhancements:
+\f0\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls5\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Annotation Burden:
+\f0\b0  Creating comprehensive, fine-grained category metadata for the entire FashionIQ dataset can be a significant undertaking. Consider semi-supervised or weakly supervised methods for scaling this.\
+\ls5\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Attribute Consistency:
+\f0\b0  Ensure consistency in attribute extraction from both images and text.\
+\ls5\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Hierarchy of Attributes:
+\f0\b0  Fashion attributes often have a hierarchical structure (e.g., "sleeve" -> "long sleeve", "short sleeve"). Incorporating this hierarchy into your negative sampling or model architecture could be beneficial.\
+\ls5\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Dynamic Negative Mining:
+\f0\b0  Instead of pre-sampling negatives, consider dynamic hard negative mining during training based on the current model's embeddings. This can be computationally intensive but often yields better results.\
+\ls5\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Ablation Studies:
+\f0\b0  To prove the effectiveness of your proposed method, you'll want to perform rigorous ablation studies:\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\sa240\partightenfactor0
+\ls5\ilvl1\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Compare performance with and without category augmentation.\
+\ls5\ilvl1\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Compare with random negative sampling vs. category-aware negative sampling.\
+\ls5\ilvl1\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Evaluate the impact of the BERT-based category extractor.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls5\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Beyond Categories:
+\f0\b0  Think about other types of metadata or semantic information that could be useful (e.g., style, occasion, material).\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 In conclusion, this is a well-thought-out and innovative approach to advance the state-of-the-art in composed information retrieval. By explicitly incorporating fine-grained categorical information and leveraging it for intelligent negative sampling, you're directly addressing key challenges in learning discriminative multimodal representations. Good luck with your research!\
+}
